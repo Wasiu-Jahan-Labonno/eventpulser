@@ -26,10 +26,26 @@ class Event extends Model
             'start_time' => 'datetime',
             'end_time' => 'datetime',
         ];
-
     }
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function organization(): BelongsTo
     {
         return $this->belongsTo(Organization::class);
+    }
+
+    public function tiers(): HasMany
+    {
+        return $this->hasMany(TicketTier::class);
+    }
+
+    // Query Scope: Filter only publicly purchasable events
+    public function scopePublished(Builder $query): void
+    {
+        $query->where('status', 'published')->where('start_time', '>', now());
     }
 }

@@ -15,11 +15,14 @@ return new class extends Migration
             $table->id();
             $table->foreignId('organization_id')->constrained()->cascadeOnDelete();
             $table->string('title');
+            $table->string('slug')->unique();
             $table->text('description')->nullable();
-            $table->string('status')->default('draft');
-            $table->dateTime('start_time');
-            $table->dateTime('end_time');
+            $table->string('status')->default('draft'); // draft, published, ended
+            $table->timestamp('starts_at');
+            $table->timestamp('ends_at');
             $table->timestamps();
+
+            $table->index(['status', 'starts_at']);
         });
     }
 
