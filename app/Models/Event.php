@@ -2,29 +2,25 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Event extends Model
 {
     use HasFactory;
+
     protected $fillable = [
-        'organization_id',
-        'title',
-        'description',
-        'status',
-        'start_time',
-        'end_time',
+        'organization_id', 'title', 'slug', 'description', 'status', 'starts_at', 'ends_at'
     ];
 
     protected function casts(): array
     {
         return [
-            'start_time' => 'datetime',
-            'end_time' => 'datetime',
+            'starts_at' => 'datetime',
+            'ends_at' => 'datetime',
         ];
     }
 
@@ -46,6 +42,6 @@ class Event extends Model
     // Query Scope: Filter only publicly purchasable events
     public function scopePublished(Builder $query): void
     {
-        $query->where('status', 'published')->where('start_time', '>', now());
+        $query->where('status', 'published')->where('starts_at', '>', now());
     }
 }

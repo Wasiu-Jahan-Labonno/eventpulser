@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('ticket_tiers', function (Blueprint $table) {
-              $table->id();
+            $table->id();
             $table->foreignId('event_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->unsignedInteger('price_cents'); // $99.00 stored as 9900 to avoid floating point math drift

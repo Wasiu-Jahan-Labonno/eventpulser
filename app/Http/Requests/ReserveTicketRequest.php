@@ -12,7 +12,7 @@ class ReserveTicketRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,8 @@ class ReserveTicketRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'quentity'=>['required','integer','min:1','max:10'],
+            'email'=>['required','email'],
         ];
     }
 }
